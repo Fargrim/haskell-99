@@ -31,5 +31,21 @@ myReverse (x:xs) = myReverse xs ++ [x] -- Very poor for long lists because of co
 
 -- #6 Find out whether a list is a palindrome
 isPalindrome :: (Eq a) => [a] -> Bool
-isPalindrome []  = False
+isPalindrome []   = False
 isPalindrome xs   = reverse xs == xs
+
+-- #7 Flatten a nested list structure.
+data NestedList a = Elem a | List [NestedList a]
+
+flatten :: NestedList a -> [a]
+flatten (Elem a)      = [a]
+flatten (List (x:xs)) = flatten x ++ flatten (List xs)
+flatten (List [])     = []
+
+--8 Eliminate consecutive duplicates of list elements.
+myCompress :: (Eq a) => [a] -> [a]
+myCompress []     = []
+myCompress [x]    = [x]
+myCompress (x:xs)
+  | x == head xs  = myCompress xs
+  | otherwise     = x:myCompress xs
